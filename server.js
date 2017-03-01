@@ -1,5 +1,7 @@
 var http = require('http');
 
+var start = function () {
+
 /* This function will be called back to when a request has been received. The
  * request will be passed as an object along with an empty response object, which
  * we can modify.
@@ -25,3 +27,7 @@ console.log('Server Created');
  * Request Received <-This output only occurs if the browser (client) makes a request
  * Request Received
  */
+};
+
+/*server is a module, exported as an object, that exposes start as a method*/
+exports.start = start;
