@@ -1,6 +1,16 @@
 var http = require('http');
+var url = require('url');
 
-var start = function () {
+/*
+ * Again we want the router to be reusable, reusability allows us to perform
+ * dependency injections in order to lightly couple the server and the router.
+ * The entire router isn't passed to the server because that would entail
+ * hard-coding an action to the server; instead, we pass an action (a function
+ * object from the router) so that we may invoke it without directly referencing
+ * the router object and its methods. We generalize the route function rather
+ * than having the server module depend on a specific router object and its route.
+*/
+var start = function (route) {
 
 /* This function will be called back to when a request has been received. The
  * request will be passed as an object along with an empty response object, which
@@ -12,6 +22,12 @@ var onRequest = function (request, response) {
      * a favicon and another for the user's request.
      */
     console.log('Request Received');
+
+    var pathname = url.parse(request.url).pathname;
+    /*route at the moment does nothing interesting, we place it here to
+     * illustrate what will be needed, at a minimum, to route our requests*/
+    route(pathname);
+
     response.writeHead(200, {"Content-Type": "text/plain"});
     response.write('Hello World');
     response.end();
