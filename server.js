@@ -24,11 +24,14 @@ var start = function (route, handle) {
         console.log('Request Received');
 
         var pathname = url.parse(request.url).pathname;
-        route(pathname, handle);
-
-        response.writeHead(200, {"Content-Type": "text/plain"});
-        response.write('Hello World');
-        response.end();
+        //Only handle non-favicon requests
+        /*The response object is a streaming object that we can write to
+         * anywhere, so we aren't restricted to the server module if we want to
+         * write a response.
+         *
+         * We pass on the response object so that the handler may craft a response.
+         */
+        if(pathname != '/favicon.ico') route(pathname, handle, response);
     }
     /* createServer is an async function, therefore any subsequent code will not be
      * block because of its invocation. Upon a request, the server will make a call back to
