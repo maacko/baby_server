@@ -13,16 +13,16 @@
 * this map in router because it hardcodes routes that may not be applicable to
 * other applications. It destroys the resuability of the router module.
 *
-* We want the handler to craft the response, therefore response object is passed
-* on to the handler so that it may write to it.
+* We want the handler to craft the response, therefore response object, along
+* with the postData is passed on to the handler so that it may write to it.
 *
 */
-var route = function (pathname, handle, response) {
+var route = function (pathname, handle, response, postData) {
     if (typeof pathname === 'string' && typeof handle[pathname] === 'function') {
         var handler = handle[pathname];
         console.log('Routing' + pathname + ' to the appropriate handler');
 
-        handler(response);
+        handler(response,postData);
     }
     else {
         response.writeHead(404, {"Content-Type": "plain/text"});
