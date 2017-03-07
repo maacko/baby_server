@@ -1,3 +1,4 @@
+var querystring = require('querystring');
 /*Note the number of arguments that a function accepts is equal to the number of
 * parameters in its definition. If the number of arguments exceed this number,
 * then the superfluous arguments are discarded.
@@ -25,17 +26,15 @@ var start = function (response) {
 
 var upload = function (response, postData) {
 
-    console.log(typeof postData);
-    writeResponse(response, postData);
     console.log('SUCCESSFULLY routed to UPLOAD function');
-};
-
-var writeResponse = function (response, message) {
-
+    console.log(typeof postData);
+    //parse the string query so that we may extact the text sent
+    var body = querystring.parse(postData).text;
     response.writeHead(200, {"Content-Type": "text/plain"});
-    response.write(message);
+    response.write(body);
     response.end();
 };
+
 
 exports.start = start;
 exports.upload = upload;
