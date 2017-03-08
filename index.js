@@ -23,7 +23,8 @@ var handlers = require('./handlers');
 
 var handle = {
     "/start": handlers.start,
-    "/upload": handlers.upload
+    "/upload": handlers.upload,
+    "/show": handlers.show
 }
 /*
  * As a sidenote, if you are wondering how we can pass an object over to a

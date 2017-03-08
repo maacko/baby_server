@@ -1,4 +1,6 @@
 var querystring = require('querystring');
+var fs = require('fs');
+
 /*Note the number of arguments that a function accepts is equal to the number of
 * parameters in its definition. If the number of arguments exceed this number,
 * then the superfluous arguments are discarded.
@@ -35,6 +37,23 @@ var upload = function (response, postData) {
     response.end();
 };
 
+var show = function (response) {
+
+    console.log('SUCCESSFULLY routed to SHOW function');
+    fs.readFile('/tmp/show.png', 'binary', function (error, file) {
+        if (error) {
+            response.writeHead(500, {"Content-Type": "text/plain"});
+            response.write(error + '\n');
+            response.end();
+        }
+        else {
+            response.writeHead(200, {"Content-Type": "image/png"});
+            response.write(file,'binary');
+            response.end();
+        }
+    });
+}
 
 exports.start = start;
 exports.upload = upload;
+exports.show = show;
