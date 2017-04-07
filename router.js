@@ -14,15 +14,18 @@
 * other applications. It destroys the resuability of the router module.
 *
 * We want the handler to craft the response, therefore response object, along
-* with the postData is passed on to the handler so that it may write to it.
+* with the request object, is passed on to the handler so that it may write to it.
+*
+* Since we are passing the request object to the handlers, the handlers, if they
+* choose to, can now utilize the request object to extract data.
 *
 */
-var route = function (pathname, handle, response, postData) {
+var route = function (pathname, handle, response, request) {
     if (typeof pathname === 'string' && typeof handle[pathname] === 'function') {
         var handler = handle[pathname];
         console.log('Routing' + pathname + ' to the appropriate handler');
 
-        handler(response,postData);
+        handler(response, request);
     }
     else {
         response.writeHead(404, {"Content-Type": "plain/text"});
