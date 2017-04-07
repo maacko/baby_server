@@ -1,3 +1,6 @@
 *.swp
 *.swap
 *.swo
+logfile.txt
+node_modules
+
